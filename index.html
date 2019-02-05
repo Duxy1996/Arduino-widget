@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<html>
+  <head>
+      <meta charset="utf-8"/>
+      <style>
+          :root {
+            --radious: 100px;
+          }
+          .radiusShape {
+            width: var(--radious);
+            height: var(--radious);
+            background-color: black;
+            border-radius: 50%;
+          }
+          .insiderColor {
+            width: calc(var(--radious) * 0.9);
+            height: calc(var(--radious) * 0.9);
+            position: absolute;
+            background-color: white;
+            border-radius: 50%;
+            margin-top: 5px;
+            margin-bottom: 5px;
+            margin-left: 5px;
+            margin-right: 5px;
+          }
+          .smallCricle {
+            width: calc(var(--radious) * 0.2);
+            height: calc(var(--radious) * 0.2);
+            background-color: black;
+            border-radius: 50%;
+          }
+      </style>
+  </head>
+  <body>
+    <div id="container" class="radiusShape">
+      <div class="insiderColor">
+        <div class="smallCricle" id="circleSlideBar">
+        </div>
+      </div>
+    </div>
+    <button onclick="placeDivAct()">Click me</button>
+  </body>
+  <script>
+    function getRandomInt()
+    {
+      return Math.trunc(Math.random()*100)
+    }
+
+    function placeDivAct()
+    {
+      var angle = Math.trunc(Math.random()*360); // Between 0 and 360
+      placeDiv(angle);
+      console.log("LOL");
+    }
+
+    function placeDiv(angle) {
+      var d = document.getElementById('circleSlideBar');
+      d.style.position = "relative";
+
+      var x = Math.cos(angle * Math.PI / 180);
+      var y = Math.sin(angle * Math.PI / 180);
+
+      x = 50 * x + 50 - 10;
+      y = 50 * y + 50 - 10;
+
+      d.style.left = y+'%';
+      d.style.top =  x+'%';
+    }
+    setInterval( function() {placeDivAct();}, 300);
+  </script>
+</html>
