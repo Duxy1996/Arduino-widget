@@ -30,12 +30,19 @@
             background-color: black;
             border-radius: 50%;
           }
+          .frame {
+            width: calc(var(--radious));
+            height: calc(var(--radious));
+            padding: calc(var(--radious) * 0.25);
+          }
       </style>
   </head>
   <body>
-    <div id="container" class="radiusShape">
-      <div class="insiderColor">
-        <div class="smallCricle" id="circleSlideBar">
+    <div id="containerframe" class="frame">
+      <div id="container" class="radiusShape">
+        <div class="insiderColor">
+          <div class="smallCricle" id="circleSlideBar">
+          </div>
         </div>
       </div>
     </div>
@@ -50,6 +57,8 @@
         this.y = y;
       }
     }
+
+     var antPos = new Vector(0,0);
 
     function getRandomInt()
     {
@@ -69,14 +78,16 @@
       var res = Math.acos(numerator/denominat);
       res = (res * 180) / Math.PI;
 
-      console.log(res);
+      var modRed = (res-10)*1.15
+
+      console.log(res,modRed);
 
       if (v1.x > 0)
       {
-        placeDiv(res);
+        placeDiv(modRed);
       }
       else{
-        placeDiv(-res);
+        placeDiv(-modRed);
       }
     }
 
@@ -85,14 +96,24 @@
       //console.log(temp.offsetX)
       //console.log(temp.offsetY)
 
-      var v1 = new Vector(temp.offsetX - 45,temp.offsetY - 45);
+      var difference = Math.abs(antPos.x - temp.offsetX);
+
+      var wOne = difference/80
+
+      antPos.x = temp.offsetX * 0.05 + antPos.x * 0.95;
+
+
+      antPos.y = temp.offsetY * 0.05 + antPos.y * 0.95;
+
+
+      var v1 = new Vector(antPos.x - 45,antPos.y - 45);
       var v2 = new Vector(0,1);
 
       getAngleVectors(v1,v2);
 
     }
 
-    var listener = document.getElementById('container');
+    var listener = document.getElementById('containerframe');
 
     listener.addEventListener('mousemove', clickHandler);
 
@@ -114,6 +135,6 @@
       d.style.left = y+'%';
       d.style.top =  x+'%';
     }
-    //setInterval( function() {placeDivAct();}, 300);
+
   </script>
 </html>
