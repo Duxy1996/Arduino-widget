@@ -7,7 +7,10 @@ class Slider
     this.frameName     = frame;
     this.containerName = container;
     this.sliderName    = slider;
+    this.value         = 0;
     this.antPos        = new Vector(0,0);
+
+    this.listOfBindings = [];
 
     this.listener  = document.getElementById(this.frameName);
     this.container = document.getElementById(this.containerName);
@@ -17,6 +20,27 @@ class Slider
 
     this.listener.addEventListener('mousemove', this.clickHandler.bind(this));
 
+  }
+
+  addBindObject(name)
+  {
+    this.listOfBindings.push(name);
+  }
+
+  updateBindObjects(tmpValue)
+  {
+    for (var index in this.listOfBindings)
+    {
+      var tmpBindObject = document.getElementById(this.listOfBindings[index]);
+      if (tmpBindObject != null)
+      {
+        tmpBindObject.innerText = Math.round(tmpValue);
+      }
+      else
+      {
+        console.log("ERROR:: An element is set to null");
+      }
+    }
   }
 
   getModule(v0)
@@ -44,7 +68,9 @@ class Slider
 
     this.placeDiv(modRed);
 
-    //obj.innerText = Math.round(modRed);
+    this.value = Math.round(modRed);
+
+    this.updateBindObjects(this.value);
 
   }
 
