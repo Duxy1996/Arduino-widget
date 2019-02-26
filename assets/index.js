@@ -1,25 +1,31 @@
 
+// # Req ./Vector.js
+
 function run()
 {
   var antPos = new Vector(0,0);
 
-  function getRandomInt()
+  var listener = document.getElementById('containerframe');
+
+  listener.addEventListener('mousemove', clickHandler);
+
+  function getModule(v0)
   {
-    return Math.trunc(Math.random()*100)
+    return Math.sqrt(v0.x * v0.x + v0.y * v0.y)
   }
 
   function getAngleVectors(v1, v2)
   {
     var numerator = v1.x * v2.x + v2.y * v1.y;
-    var denominat = Math.sqrt(v1.x * v1.x + v1.y * v1.y) + Math.sqrt(v2.x * v2.x + v2.y * v2.y);
-    var res = Math.acos(numerator/denominat);
+    var denominat = getModule(v1) + getModule(v2);
+    var res = Math.acos(numerator / denominat);
     res = (res * 180) / Math.PI;
 
-    var modRed = (res-10)*1.15
+    var modRed = (res-10) * 1.15
 
     if (v1.x > 0)
     {
-      placeDiv(modRed);
+      placeDiv(+modRed);
     }
     else{
       placeDiv(-modRed);
@@ -30,7 +36,7 @@ function run()
   {
     var difference = Math.abs(antPos.x - temp.offsetX);
 
-    var wOne = difference/80
+    var wOne = difference / 80
 
     antPos.x = temp.offsetX * 0.05 + antPos.x * 0.95;
 
@@ -38,15 +44,11 @@ function run()
     antPos.y = temp.offsetY * 0.05 + antPos.y * 0.95;
 
 
-    var v1 = new Vector(antPos.x - 45,antPos.y - 45);
+    var v1 = new Vector(antPos.x - 45, antPos.y - 45);
     var v2 = new Vector(0,1);
 
     getAngleVectors(v1,v2);
   }
-
-  var listener = document.getElementById('containerframe');
-
-  listener.addEventListener('mousemove', clickHandler);
 
   function placeDiv(angle)
   {
@@ -63,8 +65,8 @@ function run()
     x = square * x + square - 10;
     y = square * y + square - 10;
 
-    d.style.left = y+'%';
-    d.style.top =  x+'%';
+    d.style.left = y +'%';
+    d.style.top =  x +'%';
   }
 }
 
