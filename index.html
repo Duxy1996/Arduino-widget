@@ -2,139 +2,26 @@
 <html lang="en">
 <html>
   <head>
-      <meta charset="utf-8"/>
-      <style>
-          :root {
-            --radious: 100px;
-          }
-          .radiusShape {
-            width: var(--radious);
-            height: var(--radious);
-            background-color: black;
-            border-radius: 50%;
-          }
-          .insiderColor {
-            width: calc(var(--radious) * 0.9);
-            height: calc(var(--radious) * 0.9);
-            position: absolute;
-            background-color: white;
-            border-radius: 50%;
-            margin-top: 5px;
-            margin-bottom: 5px;
-            margin-left: 5px;
-            margin-right: 5px;
-          }
-          .smallCricle {
-            width: calc(var(--radious) * 0.2);
-            height: calc(var(--radious) * 0.2);
-            background-color: black;
-            border-radius: 50%;
-          }
-          .frame {
-            width: calc(var(--radious));
-            height: calc(var(--radious));
-            padding: calc(var(--radious) * 0.25);
-          }
-      </style>
+    <meta charset="utf-8"/>
+    <link rel="stylesheet" href="assets/style.css">
+    <script src="assets/Vector.js"></script>
+    <script src="assets/Slider.js"></script>
+    <script src="assets/index.js"></script>
   </head>
   <body>
+    <input type="tel" maxlength="512" id="searchTxt" class="searchField"/>
+    <button type="button" onclick="setSliderMax()">Click Me!</button>
     <div id="containerframe" class="frame">
       <div id="container" class="radiusShape">
         <div class="insiderColor">
-          <div class="smallCricle" id="circleSlideBar">
+          <div id="circleSlideBar" class="smallCricle">
           </div>
         </div>
       </div>
     </div>
+    <p id="exampleLabel">0</p>
+    <p id="exampleLabel1">0</p>
+    <p id="exampleLabel2">0</p>
+    <p id="exampleLabel3">0</p>
   </body>
-  <script>
-
-    class Vector
-    {
-      constructor(x,y)
-      {
-        this.x = x;
-        this.y = y;
-      }
-    }
-
-     var antPos = new Vector(0,0);
-
-    function getRandomInt()
-    {
-      return Math.trunc(Math.random()*100)
-    }
-
-    function placeDivAct()
-    {
-      var angle = Math.trunc(Math.random()*360); // Between 0 and 360
-      placeDiv(angle);
-    }
-
-    function getAngleVectors(v1, v2)
-    {
-      var numerator = v1.x * v2.x + v2.y * v1.y;
-      var denominat = Math.sqrt(v1.x * v1.x + v1.y * v1.y) + Math.sqrt(v2.x * v2.x + v2.y * v2.y);
-      var res = Math.acos(numerator/denominat);
-      res = (res * 180) / Math.PI;
-
-      var modRed = (res-10)*1.15
-
-      console.log(res,modRed);
-
-      if (v1.x > 0)
-      {
-        placeDiv(modRed);
-      }
-      else{
-        placeDiv(-modRed);
-      }
-    }
-
-    function clickHandler(temp)
-    {
-      //console.log(temp.offsetX)
-      //console.log(temp.offsetY)
-
-      var difference = Math.abs(antPos.x - temp.offsetX);
-
-      var wOne = difference/80
-
-      antPos.x = temp.offsetX * 0.05 + antPos.x * 0.95;
-
-
-      antPos.y = temp.offsetY * 0.05 + antPos.y * 0.95;
-
-
-      var v1 = new Vector(antPos.x - 45,antPos.y - 45);
-      var v2 = new Vector(0,1);
-
-      getAngleVectors(v1,v2);
-
-    }
-
-    var listener = document.getElementById('containerframe');
-
-    listener.addEventListener('mousemove', clickHandler);
-
-    function placeDiv(angle) {
-      var d = document.getElementById('circleSlideBar');
-      var container = document.getElementById('container');
-
-      d.style.position = 'relative';
-
-      // It returns the div size
-      var square = (container.offsetWidth)/2;
-
-      var x = Math.cos(angle * Math.PI / 180);
-      var y = Math.sin(angle * Math.PI / 180);
-
-      x = square * x + square - 10;
-      y = square * y + square - 10;
-
-      d.style.left = y+'%';
-      d.style.top =  x+'%';
-    }
-
-  </script>
 </html>
