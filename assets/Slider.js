@@ -8,6 +8,7 @@ class Slider
     this.containerName = container;
     this.sliderName    = slider;
     this.value         = 0;
+    this.range         = 100;
     this.antPos        = new Vector(0,0);
 
     this.listOfBindings = [];
@@ -22,6 +23,11 @@ class Slider
 
   }
 
+  setRange(newRange)
+  {
+    this.range = newRange;
+  }
+
   addBindObject(name)
   {
     this.listOfBindings.push(name);
@@ -34,7 +40,8 @@ class Slider
       var tmpBindObject = document.getElementById(this.listOfBindings[index]);
       if (tmpBindObject != null)
       {
-        tmpBindObject.innerText = Math.round(tmpValue);
+        var tmpValueiteration = (tmpValue + 180) * (this.range / 360);
+        tmpBindObject.innerText = Math.round(tmpValueiteration);
       }
       else
       {
